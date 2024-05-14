@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "www-requef"
+version = "0.1.0"
+description = "Webserver at www.requef.com on FastAPI"
+authors = ["Max Smagin <lazlogogalac777@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.0"
+uvicorn = "^0.29.0"
+
+[tool.poetry.scripts]
+start = "www_requef.main:start"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
