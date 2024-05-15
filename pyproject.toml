@@ -5,7 +5,7 @@ description = "Webserver at www.requef.com on FastAPI"
 authors = ["Max Smagin <lazlogogalac777@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.11"
 fastapi = "^0.111.0"
 uvicorn = "^0.29.0"
 
