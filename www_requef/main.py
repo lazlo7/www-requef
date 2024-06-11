@@ -4,10 +4,11 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from random import choice
 
-app = FastAPI()
 
+app = FastAPI()
 app.mount("/static", StaticFiles(directory="www_requef/static"), name="static")
 templates = Jinja2Templates(directory="www_requef/templates")
+
 
 @app.exception_handler(404)
 async def custom_404_handler(request: Request, _):
@@ -19,6 +20,7 @@ async def custom_404_handler(request: Request, _):
         "nothing's here, nobody's here"
     ]
     return templates.TemplateResponse("404.html", {"request": request, "comment": choice(comments)})
+
 
 @app.get("/")
 async def root(request: Request):

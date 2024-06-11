@@ -6,4 +6,4 @@ RUN pip install --no-cache-dir uvicorn fastapi Jinja2
 
 WORKDIR /app/src
 
-CMD ["uvicorn", "main:app", "--host=0.0.0.0", "--port=8001"]
+CMD ["uvicorn", "main:app", "--host=0.0.0.0", "--port=8000"]

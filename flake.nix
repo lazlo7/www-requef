@@ -1,5 +1,5 @@
 {
-  description = "Development shell for catris";
+  description = "Development shell for webserver";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     poetry2nix.url = "github:nix-community/poetry2nix";
