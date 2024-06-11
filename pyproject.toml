@@ -8,6 +8,7 @@ authors = ["Max Smagin <lazlogogalac777@gmail.com>"]
 python = "^3.11"
 fastapi = "^0.111.0"
 uvicorn = "^0.29.0"
+httpx = "^0.27.0"
 
 [tool.poetry.scripts]
 start = "www_requef.main:start"
