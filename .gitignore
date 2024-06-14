@@ -177,3 +177,6 @@ pyrightconfig.json
 
 # Ignore .env
 .env
+
+# Ignore .secret.env
+.secret.env

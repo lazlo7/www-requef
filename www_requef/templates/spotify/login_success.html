@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>requef</title>
+    <link rel="icon" href="{{ url_for('static', path='/img/favicon.jpg') }}" type="image/x-icon"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #292727;
+            color: #efe8e8;
+            margin: 0;
+            padding: 0;
+        }
+        .button {
+            background-color: #292727;
+            border: 2px solid #efe8e8;
+            border-radius: 20px;
+            color: #efe8e8;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <h1>✅: spotify authorization completed</h1>
+        <button class="button" onclick="window.location.href='/'">Return to Home</button>
+    </div>
+</body>
+</html>

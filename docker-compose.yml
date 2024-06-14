@@ -6,8 +6,12 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "${PORT}:8000"
+      - "${APP_WEB_PORT}:8000"
     volumes:
       - ./src:/app/src
+      - "storage:${APP_STORAGE_PATH}"
     env_file:
       - .env
+
+volumes:
+  storage:

@@ -1,17 +1,26 @@
+from www_requef.dependencies import get_templates
+from www_requef.config import SPOTIFY_ENABLED
+from www_requef.spotify.dependencies import get_client as get_spotify_client
+from www_requef.spotify.client import SpotifyClient
+from random import choice
 import uvicorn
-from fastapi import FastAPI, Request
+from fastapi import Depends, FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from random import choice
 
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="www_requef/static"), name="static")
-templates = Jinja2Templates(directory="www_requef/templates")
+
+
+if SPOTIFY_ENABLED:
+    from www_requef.spotify.routes import router as spotify_router
+    app.include_router(spotify_router, prefix="/spotify")
+    print("spotify enabled")
 
 
 @app.exception_handler(404)
-async def custom_404_handler(request: Request, _):
+async def custom_404_handler(req: Request, _):
     comments = [
         "uhhhm, you sure this what you looking for?",
         "this might be a dead end",
@@ -19,12 +28,18 @@ async def custom_404_handler(request: Request, _):
         "you might want to turn back",
         "nothing's here, nobody's here"
     ]
-    return templates.TemplateResponse("404.html", {"request": request, "comment": choice(comments)})
+    # You can't use dependency injection in exception handlers,
+    # so we directly call the function instead.
+    t = get_templates()
+    return t.TemplateResponse("404.html", {"request": req, "comment": choice(comments)})
 
 
 @app.get("/")
-async def root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+async def root(req: Request,
+               spotify_client: SpotifyClient = Depends(get_spotify_client),
+               t: Jinja2Templates = Depends(get_templates)):
+    track = spotify_client.get_current_track()
+    return t.TemplateResponse("index.html", {"request": req, "track": track})
 
 
 def start():
