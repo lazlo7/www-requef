@@ -1,7 +1,5 @@
 from www_requef.dependencies import get_templates
 from www_requef.config import SPOTIFY_ENABLED
-from www_requef.spotify.dependencies import get_client as get_spotify_client
-from www_requef.spotify.client import SpotifyClient
 from random import choice
 import uvicorn
 from fastapi import Depends, FastAPI, Request
@@ -35,11 +33,9 @@ async def custom_404_handler(req: Request, _):
 
 
 @app.get("/")
-async def root(req: Request,
-               spotify_client: SpotifyClient = Depends(get_spotify_client),
+async def index(req: Request,
                t: Jinja2Templates = Depends(get_templates)):
-    track = spotify_client.get_current_track()
-    return t.TemplateResponse("index.html", {"request": req, "track": track})
+    return t.TemplateResponse("index.html", {"request": req})
 
 
 def start():

@@ -3,7 +3,7 @@ from www_requef.main import get_templates
 from www_requef.spotify.dependencies import get_client
 from www_requef.spotify.client import SpotifyClient
 from urllib.parse import urlencode
-from fastapi.responses import RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi import APIRouter, Depends, Request
 from fastapi.templating import Jinja2Templates
 
@@ -60,3 +60,23 @@ async def callback(_: Request,
         return RedirectResponse("/spotify/error")
 
     return RedirectResponse("/spotify/success")
+
+
+@router.get("/track", response_class=HTMLResponse)
+async def track(client: SpotifyClient = Depends(get_client)):
+    track = await client.get_current_track()
+    if track:
+        return (
+            "<a href='https://open.spotify.com/user/31zilo7ssyl7kmqobuq4x447tqau?si=8a0dc05095a14e5b' "
+            "target='_blank'><strong>requef</strong></a> is now listening to "
+            f"<strong>{track['track_name']}</strong> by <strong>{track['artist_names']}</strong>"
+        )
+    return ""
+
+
+@router.get("/track/album_cover_url")
+async def track_album_cover_url(client: SpotifyClient = Depends(get_client)):
+    track = await client.get_current_track()
+    if track:
+        return track["album_cover_url"]
+    return ""

@@ -7,6 +7,9 @@ import httpx
 
 
 class SpotifyClient:
+    CACHE_INVALIDATION_TIME = 10.0
+
+
     def __init__(self, 
                  client_id: str, 
                  client_secret: str, 
@@ -20,6 +23,8 @@ class SpotifyClient:
         self.__access_token = ""
         self.__access_token_timestamp = 0.0
         self.__access_token_expires_in = 0
+        self.__cached_track = None
+        self.__cached_track_timestamp = 0.0
         self.regenerate_state()
 
 
@@ -84,12 +89,17 @@ class SpotifyClient:
         })
 
 
-    def get_current_track(self) -> dict | None:
+    async def get_current_track(self) -> dict | None:
         if not self.authorized:
             return None
         
-        # Check if access token is expired.
+        # If cached track is still valid, return it.
+        # This avoids unnecessary requests to the Spotify API.
         time_now = time()
+        if time_now < self.__cached_track_timestamp + self.CACHE_INVALIDATION_TIME:
+            return self.__cached_track
+
+        # Check if access token is expired.
         if time_now >= self.__access_token_timestamp + self.__access_token_expires_in:
             if not self.request_tokens():
                 return None
@@ -103,10 +113,13 @@ class SpotifyClient:
         response_data = response.json()
         track_name = response_data["item"]["name"]
         artist_names = [artist["name"] for artist in response_data["item"]["artists"]]
-        album_cover = response_data["item"]["album"]["images"][0]["url"]
+        album_cover_url = response_data["item"]["album"]["images"][0]["url"]
 
-        return {
+        result = {
             "track_name": track_name, 
             "artist_names": ", ".join(artist_names), 
-            "album_cover": album_cover
+            "album_cover_url": album_cover_url
         }
+
+        self.__cached_track = result
+        return result
