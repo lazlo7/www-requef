@@ -14,6 +14,8 @@
         python = pkgs.python311;
         pyproject = ./pyproject.toml;
         poetryLock = ./poetry.lock; 
+        # TODO: Plugin installation doesn't work for now.
+        plugins = [ pkgs.poetryPlugins.poetry-plugin-export ];
       };
     in {
       devShells.${system}.default = pkgs.mkShell {

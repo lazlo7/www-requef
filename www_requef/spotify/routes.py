@@ -22,8 +22,7 @@ async def auth_success(req: Request, t: Jinja2Templates = Depends(get_templates)
 
 
 @router.get("/")
-async def login(_: Request, 
-                client: SpotifyClient = Depends(get_client)):
+async def login(_: Request, client: SpotifyClient = Depends(get_client)):
     if client.authorized:
         return RedirectResponse("/spotify/success")
     
