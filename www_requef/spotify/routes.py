@@ -63,6 +63,9 @@ async def callback(_: Request,
 
 @router.get("/track", response_class=HTMLResponse)
 async def track(client: SpotifyClient = Depends(get_client)):
+    if not client.authorized:
+        return ""
+    
     track = await client.get_current_track()
     if track:
         return (
@@ -70,12 +73,17 @@ async def track(client: SpotifyClient = Depends(get_client)):
             "target='_blank'><strong>requef</strong></a> is now listening to "
             f"<strong>{track['track_name']}</strong> by <strong>{track['artist_names']}</strong>"
         )
+    
     return ""
 
 
 @router.get("/track/album_cover_url")
 async def track_album_cover_url(client: SpotifyClient = Depends(get_client)):
+    if not client.authorized:
+        return ""
+    
     track = await client.get_current_track()
     if track:
         return track["album_cover_url"]
+    
     return ""

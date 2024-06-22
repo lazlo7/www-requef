@@ -1,4 +1,5 @@
 from www_requef.spotify.token_storage import TokenStorage
+from www_requef.spotify.utils import cache_result
 from string import ascii_letters, digits
 from random import choices
 from base64 import b64encode
@@ -23,8 +24,6 @@ class SpotifyClient:
         self.__access_token = ""
         self.__access_token_timestamp = 0.0
         self.__access_token_expires_in = 0
-        self.__cached_track = None
-        self.__cached_track_timestamp = 0.0
         self.regenerate_state()
 
 
@@ -89,17 +88,10 @@ class SpotifyClient:
         })
 
 
-    async def get_current_track(self) -> dict | None:
-        if not self.authorized:
-            return None
-        
-        # If cached track is still valid, return it.
-        # This avoids unnecessary requests to the Spotify API.
-        time_now = time()
-        if time_now < self.__cached_track_timestamp + self.CACHE_INVALIDATION_TIME:
-            return self.__cached_track
-
+    @cache_result(timeout_s = 10.0)
+    async def get_current_track(self) -> dict | None:        
         # Check if access token is expired.
+        time_now = time()
         if time_now >= self.__access_token_timestamp + self.__access_token_expires_in:
             if not self.request_tokens():
                 return None
@@ -120,6 +112,5 @@ class SpotifyClient:
             "artist_names": ", ".join(artist_names), 
             "album_cover_url": album_cover_url
         }
-
-        self.__cached_track = result
+        
         return result
