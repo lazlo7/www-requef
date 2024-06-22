@@ -29,7 +29,9 @@ async def custom_404_handler(req: Request, _):
     # You can't use dependency injection in exception handlers,
     # so we directly call the function instead.
     t = get_templates()
-    return t.TemplateResponse("404.html", {"request": req, "comment": choice(comments)})
+    return t.TemplateResponse("404.html", 
+                              {"request": req, "comment": choice(comments)},
+                              status_code=404)
 
 
 @app.get("/")
