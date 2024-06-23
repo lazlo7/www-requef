@@ -62,28 +62,22 @@ async def callback(_: Request,
 
 
 @router.get("/track", response_class=HTMLResponse)
-async def track(client: SpotifyClient = Depends(get_client)):
+async def current_track(client: SpotifyClient = Depends(get_client)):
     if not client.authorized:
         return ""
     
     track = await client.get_current_track()
     if track:
+        track_name = track["track_name"]
+        artist_names = track["artist_names"]
+        album_cover_url = track["album_cover_url"]
         return (
-            "<a href='https://open.spotify.com/user/31zilo7ssyl7kmqobuq4x447tqau?si=8a0dc05095a14e5b' "
-            "target='_blank'><strong>requef</strong></a> is now listening to "
-            f"<strong>{track['track_name']}</strong> by <strong>{track['artist_names']}</strong>"
+            f"<img id='current-track-album-cover' class='center' draggable='false' src='{album_cover_url}' alt='Current Track Album Cover'>"
+            "<div id='current-track-info'>"
+                "<a href='https://open.spotify.com/user/31zilo7ssyl7kmqobuq4x447tqau?si=8a0dc05095a14e5b' "
+                "target='_blank'><strong>requef</strong></a> is now listening to "
+                f"<strong>{track_name}</strong> by <strong>{artist_names}</strong>"
+            "</div>"
         )
-    
-    return ""
-
-
-@router.get("/track/album_cover_url")
-async def track_album_cover_url(client: SpotifyClient = Depends(get_client)):
-    if not client.authorized:
-        return ""
-    
-    track = await client.get_current_track()
-    if track:
-        return track["album_cover_url"]
     
     return ""

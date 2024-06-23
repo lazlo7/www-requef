@@ -4,21 +4,6 @@
     <title>requef</title>
     <link rel="icon" href="{{ url_for('static', path='/img/favicon.jpg') }}" type="image/x-icon"/>
     <script src="https://unpkg.com/htmx.org"></script>
-    <script>
-        function updateBackground() {
-            response = fetch("/spotify/track/album_cover_url")
-                .then(response => response.text())
-                .then(album_cover_url => {
-                    if (album_cover_url) {
-                        document.getElementById('background').style.backgroundImage = `url(${album_cover_url})`;
-                    } else {
-                        document.getElementById('background').style.backgroundImage = '';
-                    }
-                });
-        }
-        updateBackground();
-        setInterval(updateBackground, 10000);
-    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,43 +12,47 @@
             margin: 0;
             padding: 0;
         }
-        #background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            opacity: 0.1;
-            z-index: -1;
+        .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
-        #now-playing {
+        #center-info {
+            text-align: center;
+            position: absolute;
+        }
+        #current-track-album-cover {
+            height: 90%;
+            width: auto;
+            opacity: 0.15;
+            z-index: -1;
+            border-radius: 20px;
+        }
+        #current-track-info {
+            position: absolute;
+            bottom: 0;
+            right: 0;
             font-family: Arial, sans-serif;
             color: #b4e6ff;
             padding: 10px;
-            border-radius: 5px;
             width: fit-content;
-            margin: 0 auto;
         }
-        #now-playing a {
+        #current-track-info a {
             color: #b4e6ff;
             text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <div id="background"></div>
-    <div style="text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <div hx-get="/spotify/track" hx-trigger="load, every 10s"></div>
+    <div id="center-info" class="center">
         <h1>requef</h1>
         <div style="display: flex; justify-content: center;">
             <a href="https://github.com/lazlo7" style="color: #efe8e8; text-decoration: none; margin: 0 10px;">github</a>
             <a href="https://www.last.fm/user/requef" style="color: #efe8e8; text-decoration: none; margin: 0 10px;">last.fm</a>
             <a href="https://letterboxd.com/requef/" style="color: #efe8e8; text-decoration: none; margin: 0 10px;">letterboxd</a>
         </div>
-    </div>
-    <div id="now-playing" hx-get="/spotify/track" hx-trigger="load, every 10s" style="position: fixed; bottom: 0; right: 0; padding: 10px;"> 
     </div>
 </body>
 </html>
