@@ -72,9 +72,9 @@ async def current_track(client: SpotifyClient = Depends(get_client)):
         artist_names = track["artist_names"]
         album_cover_url = track["album_cover_url"]
         return (
-            "<figure id='current-track-container' class='center'>"
-                f"<img id='current-track-album-cover' draggable='false' src='{album_cover_url}' alt='Current Track Album Cover'>"
-                "<figcaption id='current-track-info'>"
+            "<figure class='current-track-container center'>"
+                f"<img class='current-track-album-cover' draggable='false' src='{album_cover_url}' alt='Current Track Album Cover'>"
+                "<figcaption class='current-track-info'>"
                     "<a href='https://open.spotify.com/user/31zilo7ssyl7kmqobuq4x447tqau?si=8a0dc05095a14e5b' "
                     "target='_blank'><strong class='nickname-normal'>requef</strong></a> is now listening to "
                     f"<strong>{track_name}</strong> by <strong>{artist_names}</strong>"

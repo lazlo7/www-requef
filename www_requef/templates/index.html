@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="notranslate" translate="no">
 <head>
     <title>requef</title>
+    <meta name="google" content="notranslate" />
     <link rel="icon" href="{{ url_for('static', path='/img/favicon.jpg') }}" type="image/x-icon"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +16,7 @@
             margin: 0;
             padding: 0;
             font-size: 1.5em;
+            z-index: 0;
         }
         .center {
             position: absolute;
@@ -29,7 +31,7 @@
         }
         .nickname-big {
             color: #f2eded;
-            font-size: 2.0em;
+            font-size: 2.3em;
             font-weight: bold;
             letter-spacing: 0.2em;
         }
@@ -37,22 +39,37 @@
             font-weight: bold;
             letter-spacing: 0.15em;
         }
-        #current-track-container {
-            margin: 0;
-            padding: 0;
+        .link {
+            height: 2.5em;
+            width: auto;
+            text-decoration: none;
+            margin: 0 0.5em;
         }
-        #current-track-album-cover {
+        .link-image {
+            height: 100%;
+            width: auto;
+            filter: invert(0%) drop-shadow(0 0 6px #efe8e8);
+            shape-rendering: geometricPrecision;
+            transition: filter 0.8s;
+        }
+        .link-image:hover, .link-image:active {
+            filter: invert(100%) drop-shadow(0 0 6px #101717);
+        }
+        .current-track-container {
+            margin: 0;
+            padding: 0;            
+        }
+        .current-track-album-cover {
             height: 90vh;
             width: auto;
             opacity: 0.3;
-            z-index: -1;
+            z-index: -2;
             border-radius: 4%;
         }
-        #center-info {
+        .center-info {
             text-align: center;
-            position: absolute;
         }
-        #current-track-info {
+        .current-track-info {
             position: absolute;
             bottom: 0;
             right: 0;
@@ -62,7 +79,7 @@
             width: fit-content;
             opacity: 0.8;
         }
-        #current-track-info a {
+        .current-track-info a {
             color: #b4e6ff;
             text-decoration: none;
         }
@@ -70,15 +87,29 @@
 </head>
 <body>
     <div hx-get="/spotify/track" hx-trigger="load, every 10s"></div>
-    <div id="center-info" class="center">
+    <div class="center-info center">
         <div style="display: flex; justify-content: center; align-items: baseline;">
             <h1 class="nickname-big">requef</h1>
             <h1 class="tld">.com</h1>
         </div>
         <div style="display: flex; justify-content: center;">
-            <a href="https://github.com/lazlo7" style="color: #efe8e8; text-decoration: none; margin: 0 10px;">github</a>
-            <a href="https://www.last.fm/user/requef" style="color: #efe8e8; text-decoration: none; margin: 0 10px;">last.fm</a>
-            <a href="https://letterboxd.com/requef/" style="color: #efe8e8; text-decoration: none; margin: 0 10px;">letterboxd</a>
+            <a href="https://github.com/lazlo7" class="link">
+                <img class="link-image" src="{{ url_for('static', path='/img/github_logo.svg') }}">
+            </a>
+            <a href="https://t.me/requef" class="link">
+                <img class="link-image" src="{{ url_for('static', path='/img/telegram_logo.svg') }}">
+            </a>
+        </div>
+        <div style="display: flex; justify-content: center; margin-top: 1em;">
+            <a href="https://www.last.fm/user/requef" class="link">
+                <img class="link-image" src="{{ url_for('static', path='/img/lastfm_logo.svg') }}">
+            </a>
+            <a href="https://letterboxd.com/requef" class="link">
+                <img class="link-image" src="{{ url_for('static', path='/img/letterboxd_logo.svg') }}">
+            </a>
+            <a href="https://www.twitch.tv/requef" class="link">
+                <img class="link-image"src="{{ url_for('static', path='/img/twitch_logo.svg') }}">
+            </a>
         </div>
     </div>
 </body>
