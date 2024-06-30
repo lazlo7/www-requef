@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/htmx.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js"></script>
     <style>
         body {
             font-family: "Ubuntu", sans-serif;
@@ -15,7 +15,7 @@
             color: #dbd5d5;
             margin: 0;
             padding: 0;
-            font-size: 1.5em;
+            font-size: 24px;
             z-index: 0;
         }
         .center {
@@ -101,21 +101,21 @@
         </div>
         <div style="display: flex; justify-content: center;">
             <a href="https://github.com/lazlo7" class="link">
-                <img class="link-image" src="{{ url_for('static', path='/img/github_logo.svg') }}">
+                <img class="link-image" src="{{ url_for('static', path='/img/github_logo.svg') }}" alt="github">
             </a>
             <a href="https://t.me/requef" class="link">
-                <img class="link-image" src="{{ url_for('static', path='/img/telegram_logo.svg') }}">
+                <img class="link-image" src="{{ url_for('static', path='/img/telegram_logo.svg') }}" alt="telegram">
             </a>
         </div>
         <div style="display: flex; justify-content: center; margin-top: 1em;">
             <a href="https://www.last.fm/user/requef" class="link">
-                <img class="link-image" src="{{ url_for('static', path='/img/lastfm_logo.svg') }}">
+                <img class="link-image" src="{{ url_for('static', path='/img/lastfm_logo.svg') }}" alt=""lastfm>
             </a>
             <a href="https://letterboxd.com/requef" class="link">
-                <img class="link-image" src="{{ url_for('static', path='/img/letterboxd_logo.svg') }}">
+                <img class="link-image" src="{{ url_for('static', path='/img/letterboxd_logo.svg') }}" alt="letterboxd">
             </a>
             <a href="https://www.twitch.tv/requef" class="link">
-                <img class="link-image"src="{{ url_for('static', path='/img/twitch_logo.svg') }}">
+                <img class="link-image"src="{{ url_for('static', path='/img/twitch_logo.svg') }}" alt="twitch">
             </a>
         </div>
     </div>
