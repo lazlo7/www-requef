@@ -133,6 +133,7 @@
                     }, 300);
                     container.addEventListener('animationend', function() {
                         container.style.opacity = 1;
+                        container.classList.remove('fade-in');
                     }, {once: true});
                 }
             }
