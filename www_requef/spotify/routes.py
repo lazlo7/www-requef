@@ -68,11 +68,12 @@ async def current_track(client: SpotifyClient = Depends(get_client)):
     
     track = await client.get_current_track()
     if track:
+        track_id = track["track_id"]
         track_name = track["track_name"]
         artist_names = track["artist_names"]
         album_cover_url = track["album_cover_url"]
         return (
-            "<figure class='current-track-container center'>"
+            f"<figure id='current-track-container-{track_id}' class='current-track-container center'>"
                 f"<img class='current-track-album-cover' draggable='false' src='{album_cover_url}' alt='Current Track Album Cover'>"
                 "<figcaption class='current-track-info'>"
                     "<a href='https://open.spotify.com/user/31zilo7ssyl7kmqobuq4x447tqau?si=8a0dc05095a14e5b' "

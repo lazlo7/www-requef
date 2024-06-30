@@ -103,11 +103,13 @@ class SpotifyClient:
             return None
         
         response_data = response.json()
+        track_id = response_data["item"]["id"]
         track_name = response_data["item"]["name"]
         artist_names = [artist["name"] for artist in response_data["item"]["artists"]]
         album_cover_url = response_data["item"]["album"]["images"][0]["url"]
 
         result = {
+            "track_id": track_id,
             "track_name": track_name, 
             "artist_names": ", ".join(artist_names), 
             "album_cover_url": album_cover_url
