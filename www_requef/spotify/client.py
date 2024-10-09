@@ -102,6 +102,9 @@ class SpotifyClient:
         if response.status_code != 200:
             return None
         
+        if response.text == "EMPTY RESPONSE":
+            return None
+        
         response_data = response.json()
         track_id = response_data["item"]["id"]
         track_name = response_data["item"]["name"]
