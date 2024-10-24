@@ -1,8 +1,9 @@
 from www_requef.dependencies import get_templates
-from www_requef.config import SPOTIFY_ENABLED
+from www_requef.config import SPOTIFY_ENABLED, CV_URL
 from random import choice
 import uvicorn
-from fastapi import Depends, FastAPI, Request
+from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -38,6 +39,13 @@ async def custom_404_handler(req: Request, _):
 async def index(req: Request,
                t: Jinja2Templates = Depends(get_templates)):
     return t.TemplateResponse("index.html", {"request": req})
+
+
+@app.get("/cv")
+async def cv():
+    if not CV_URL:
+        raise HTTPException(status_code=404, detail="CV not available")
+    return RedirectResponse(CV_URL)
 
 
 def start():

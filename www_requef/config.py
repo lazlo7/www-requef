@@ -8,6 +8,7 @@ APP_STORAGE_PATH = config("APP_STORAGE_PATH", cast=str, default="")
 SPOTIFY_CLIENT_ID = config("SPOTIFY_CLIENT_ID", cast=str, default="")
 SPOTIFY_CLIENT_SECRET = config("SPOTIFY_CLIENT_SECRET", cast=str, default="")
 SPOTIFY_REDIRECT_URI = config("SPOTIFY_REDIRECT_URI", cast=str, default="")
+CV_URL = config("CV_URL", cast=str, default="")
 
 SPOTIFY_ENABLED = all([APP_STORAGE_PATH, 
                        SPOTIFY_CLIENT_ID, 
